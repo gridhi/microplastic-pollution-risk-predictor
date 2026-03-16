@@ -1,7 +1,8 @@
-
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <title>Microplastic Pollution Risk Predictor</title>
 
@@ -10,112 +11,90 @@
 <style>
 
 body{
-font-family:Segoe UI;
-margin:0;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
+font-family: Arial, Helvetica, sans-serif;
+background:#0b1a2e;
 color:white;
+margin:0;
 }
 
 nav{
-background:#111;
-padding:15px;
-text-align:center;
+background:#081220;
+padding:12px;
+display:flex;
+gap:10px;
+position:sticky;
+top:0;
 }
 
 nav button{
-margin:6px;
-padding:10px 20px;
-border:none;
-background:linear-gradient(45deg,#00c3ff,#4facfe);
+background:#132b4f;
 color:white;
-border-radius:20px;
+border:none;
+padding:8px 14px;
 cursor:pointer;
+border-radius:6px;
+}
+
+nav button:hover{
+background:#1f4d87;
 }
 
 .page{
 display:none;
 padding:40px;
-text-align:center;
 }
 
-.active{
+.page.active{
 display:block;
 }
 
-.cards{
-display:flex;
-flex-wrap:wrap;
-justify-content:center;
+.hero{
+text-align:center;
+margin-top:40px;
 }
 
 .card{
-background:white;
-color:black;
+background:#132b4f;
 padding:20px;
-margin:15px;
-border-radius:12px;
-width:260px;
-box-shadow:0 5px 10px rgba(0,0,0,0.3);
+border-radius:10px;
+margin:10px;
 }
 
-.container{
-background:white;
-color:black;
-width:350px;
-margin:auto;
-padding:25px;
-border-radius:10px;
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:15px;
+margin-top:30px;
 }
 
 input{
-width:90%;
+width:100%;
 padding:10px;
-margin:8px;
+margin-top:5px;
+margin-bottom:15px;
+border-radius:6px;
+border:none;
 }
 
-.btn{
-padding:10px 20px;
-background:#0077ff;
-color:white;
+button.predict{
+background:#00c3ff;
+color:black;
+padding:10px;
 border:none;
 border-radius:6px;
 cursor:pointer;
 }
 
-table{
-width:95%;
-margin:auto;
-border-collapse:collapse;
-background:white;
-color:black;
-font-size:13px;
-}
-
-th,td{
-padding:6px;
-border:1px solid #ddd;
-}
-
-th{
-background:#0077ff;
-color:white;
-}
-
-.data-box{
-max-height:300px;
-overflow-y:scroll;
+.result{
+margin-top:20px;
+font-size:18px;
 }
 
 canvas{
 background:white;
-padding:15px;
 border-radius:10px;
-margin:25px;
+padding:10px;
 }
-
-.low{color:green;font-weight:bold;}
-.medium{color:orange;font-weight:bold;}
-.high{color:red;font-weight:bold;}
 
 </style>
 </head>
@@ -123,316 +102,130 @@ margin:25px;
 <body>
 
 <nav>
-
 <button onclick="showPage('home')">Home</button>
-<button onclick="showPage('about')">About</button>
 <button onclick="showPage('predictor')">Predictor</button>
-<button onclick="showPage('dataset')">Dataset</button>
-<button onclick="showPage('visualization')">Visualization</button>
-<button onclick="showPage('resources')">Resources</button>
-
+<button onclick="showPage('charts')">Charts</button>
 </nav>
-
 
 <div id="home" class="page active">
 
+<div class="hero">
 <h1>Microplastic Pollution Risk Predictor</h1>
+<p>Analyze environmental indicators to estimate microplastic contamination risk.</p>
+</div>
 
-<p>
-This platform analyzes environmental indicators such as population density,
-plastic waste production, recycling rate, rainfall and proximity to rivers
-to estimate the risk of microplastic contamination.
-</p>
-
-<div class="cards">
+<div class="grid">
 
 <div class="card">
 <h3>Global Plastic Waste</h3>
-<p>More than 350 million tons of plastic waste are produced each year globally.</p>
+<h2>350M+</h2>
+<p>tons produced every year</p>
 </div>
 
 <div class="card">
 <h3>Ocean Pollution</h3>
-<p>Between 1 and 2 million tons of plastic enter oceans every year.</p>
+<h2>1–2M</h2>
+<p>tons enter oceans annually</p>
 </div>
 
 <div class="card">
-<h3>Microplastic Definition</h3>
-<p>Microplastics are plastic particles smaller than 5mm found in oceans and rivers.</p>
+<h3>Microplastics</h3>
+<h2>&lt;5mm</h2>
+<p>plastic particles found everywhere</p>
 </div>
 
 </div>
 
-<h2>Global Plastic Pollution Trend</h2>
-<canvas id="chartGlobal"></canvas>
-
 </div>
-
-
-<div id="about" class="page">
-
-<h1>Understanding Microplastic Pollution</h1>
-
-<p>
-Microplastics originate from larger plastic waste that breaks down due to
-sunlight and environmental degradation.
-</p>
-
-<div class="cards">
-
-<div class="card">
-<h3>Sources</h3>
-<p>Plastic packaging, clothing fibers and tire wear.</p>
-</div>
-
-<div class="card">
-<h3>Environmental Impact</h3>
-<p>Microplastics harm marine ecosystems and biodiversity.</p>
-</div>
-
-<div class="card">
-<h3>Human Health Risk</h3>
-<p>Microplastics may enter the human body through food and water.</p>
-</div>
-
-</div>
-
-<h2>Plastic Waste vs Recycling Rate</h2>
-<canvas id="chartRecycle"></canvas>
-
-</div>
-
 
 <div id="predictor" class="page">
 
-<h1>Microplastic Risk Predictor</h1>
+<h2>Manual Risk Predictor</h2>
 
-<div class="container">
+<label>Population Density</label>
+<input id="pop" type="number">
 
-<input id="pop" type="number" placeholder="Population Density">
-<input id="plastic" type="number" placeholder="Plastic Waste per Capita">
-<input id="recycle" type="number" placeholder="Recycling Rate">
-<input id="rain" type="number" placeholder="Rainfall (mm)">
-<input id="river" type="number" placeholder="River Distance (km)">
+<label>Plastic Waste (kg/day)</label>
+<input id="plastic" type="number">
 
-<button class="btn" onclick="predict()">Predict Risk</button>
+<label>Recycling Rate (%)</label>
+<input id="recycle" type="number">
 
-<h2 id="result"></h2>
+<label>Rainfall (mm)</label>
+<input id="rain" type="number">
 
-</div>
+<label>River Distance (km)</label>
+<input id="river" type="number">
 
-</div>
+<button class="predict" onclick="predict()">Calculate Risk</button>
 
-
-<div id="dataset" class="page">
-
-<h1>Dataset Used For Prediction</h1>
-
-<div class="data-box">
-
-<table id="dataTable">
-
-<tr>
-<th>Population</th>
-<th>Plastic Waste</th>
-<th>Recycling</th>
-<th>Rainfall</th>
-<th>River Distance</th>
-<th>Risk</th>
-</tr>
-
-</table>
+<div id="result" class="result"></div>
 
 </div>
 
-<h3>Risk Distribution in Dataset</h3>
-<canvas id="riskChart"></canvas>
+<div id="charts" class="page">
+
+<h2>Plastic Production Trend</h2>
+
+<canvas id="chart"></canvas>
 
 </div>
-
-
-<div id="visualization" class="page">
-
-<h1>Dataset Visualization</h1>
-
-<canvas id="chartPop"></canvas>
-<canvas id="chartPlastic"></canvas>
-<canvas id="chartRain"></canvas>
-
-</div>
-
-
-<div id="resources" class="page">
-
-<h1>Scientific Resources</h1>
-
-<div class="cards">
-
-<div class="card">
-<h3>Plastic Pollution Data</h3>
-<a href="https://ourworldindata.org/plastic-pollution" target="_blank">Open Resource</a>
-<p>
-Our World in Data provides global statistics and research on plastic production,
-waste management, and plastic pollution trends across different countries.
-</p>
-</div>
-
-<div class="card">
-<h3>World Bank Population Density</h3>
-<a href="https://data.worldbank.org/indicator/EN.POP.DNST" target="_blank">Open Resource</a>
-<p>
-The World Bank dataset provides population density statistics for countries
-around the world which helps analyze how population pressure affects plastic waste generation.
-</p>
-</div>
-
-<div class="card">
-<h3>NASA Earth Data</h3>
-<a href="https://www.earthdata.nasa.gov/" target="_blank">Open Resource</a>
-<p>
-NASA Earth Data provides satellite-based environmental datasets including
-rainfall patterns, climate observations and environmental monitoring data.
-</p>
-</div>
-
-<div class="card">
-<h3>NOAA Marine Debris</h3>
-<a href="https://marinedebris.noaa.gov/" target="_blank">Open Resource</a>
-<p>
-NOAA Marine Debris Program studies marine pollution including plastic debris
-in oceans and provides research on impacts of microplastics on marine ecosystems.
-</p>
-</div>
-
-<div class="card">
-<h3>Recycling Dataset</h3>
-<a href="https://ourworldindata.org/grapher/municipal-waste-recycling-rate" target="_blank">Open Resource</a>
-<p>
-This dataset provides global recycling statistics showing how effective
-waste management and recycling systems help reduce plastic pollution.
-</p>
-</div>
-
-</div>
-
-</div>
-
 
 <script>
 
 function showPage(page){
+
 document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"))
+
 document.getElementById(page).classList.add("active")
+
 }
 
-const data=[
-[850,0.32,44,760,14,"Low"],
-[920,0.34,43,780,13,"Low"],
-[980,0.36,42,790,12,"Low"],
-[1050,0.38,41,810,11,"Low"],
-[1400,0.48,36,900,8,"Low"],
-[1550,0.52,34,920,7,"Medium"],
-[1700,0.56,32,940,7,"Medium"],
-[1850,0.60,30,960,6,"Medium"],
-[2000,0.64,28,980,6,"Medium"],
-[2230,0.70,25,1010,5,"High"],
-[2380,0.74,23,1030,4,"High"],
-[2520,0.78,21,1050,4,"High"],
-[2680,0.82,19,1070,4,"High"],
-[2900,0.88,16,1100,3,"High"],
-[3200,0.96,12,1140,3,"High"]
-]
+function calcScore(pop,plastic,recycle,rain,river){
 
-const table=document.getElementById("dataTable")
+return (pop*plastic)/1000 + rain/1000 - recycle/10 + (10-Math.min(river,10))
 
-data.forEach(r=>{
-let tr=document.createElement("tr")
-
-r.forEach((c,i)=>{
-let td=document.createElement("td")
-td.innerText=c
-
-if(i==5){
-if(c=="Low") td.className="low"
-if(c=="Medium") td.className="medium"
-if(c=="High") td.className="high"
 }
-
-tr.appendChild(td)
-})
-
-table.appendChild(tr)
-})
 
 function predict(){
-let pop=document.getElementById("pop").value
-let plastic=document.getElementById("plastic").value
-let result=document.getElementById("result")
 
-if(pop<1500 && plastic<0.5)
-result.innerHTML="Low Microplastic Risk"
-else if(pop<2200)
-result.innerHTML="Moderate Microplastic Risk"
-else
-result.innerHTML="High Microplastic Risk"
+let pop=parseFloat(document.getElementById("pop").value)||0
+let plastic=parseFloat(document.getElementById("plastic").value)||0
+let recycle=parseFloat(document.getElementById("recycle").value)||0
+let rain=parseFloat(document.getElementById("rain").value)||0
+let river=parseFloat(document.getElementById("river").value)||0
+
+let score=calcScore(pop,plastic,recycle,rain,river)
+
+let risk="Low"
+
+if(score>=6) risk="Medium"
+if(score>=12) risk="High"
+
+document.getElementById("result").innerHTML=
+"Score: "+score.toFixed(2)+"<br>Risk Level: "+risk
+
 }
 
-let low=data.filter(d=>d[5]=="Low").length
-let med=data.filter(d=>d[5]=="Medium").length
-let high=data.filter(d=>d[5]=="High").length
+new Chart(document.getElementById("chart"),{
 
-new Chart(document.getElementById("riskChart"),{
-type:"bar",
-data:{
-labels:["Low","Medium","High"],
-datasets:[{
-data:[low,med,high],
-backgroundColor:["green","orange","red"]
-}]
-}
-})
-
-new Chart(document.getElementById("chartGlobal"),{
 type:"line",
+
 data:{
-labels:["2000","2005","2010","2015","2020"],
+labels:["2000","2005","2010","2015","2020","2023"],
 datasets:[{
-label:"Global Plastic Production",
-data:[200,250,300,350,390],
-borderColor:"cyan"
+label:"Plastic Production (Mt)",
+data:[200,250,300,350,390,430],
+borderColor:"#00e5ff",
+backgroundColor:"rgba(0,229,255,0.2)",
+fill:true
 }]
+},
+
+options:{
+responsive:true
 }
-})
 
-new Chart(document.getElementById("chartRecycle"),{
-type:"bar",
-data:{
-labels:["2010","2012","2014","2016","2018","2020"],
-datasets:[{
-label:"Recycling %",
-data:[18,20,22,25,28,30],
-backgroundColor:"orange"
-}]
-}
-})
-
-const pop=data.map(d=>d[0])
-const plastic=data.map(d=>d[1])
-const rain=data.map(d=>d[3])
-
-new Chart(document.getElementById("chartPop"),{
-type:"line",
-data:{labels:pop,datasets:[{label:"Population Density",data:pop,borderColor:"blue"}]}
-})
-
-new Chart(document.getElementById("chartPlastic"),{
-type:"bar",
-data:{labels:pop,datasets:[{label:"Plastic Waste",data:plastic,backgroundColor:"red"}]}
-})
-
-new Chart(document.getElementById("chartRain"),{
-type:"line",
-data:{labels:pop,datasets:[{label:"Rainfall",data:rain,borderColor:"green"}]}
 })
 
 </script>
